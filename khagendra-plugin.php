@@ -1,0 +1,61 @@
+<?php
+/*
+    @package KhagendraPlugin
+*/
+
+/*
+
+Plugin Name: Khagendra Plugin
+Plugin URI: https://khagendralama.com.np/wordpress-plugin/
+Description: This is my first attempt on writting a custom plugin.
+Version: 1.0.0
+Author: Khagendra Lama
+Author URI: https://khagendralama.com.np
+License: GPLv2 or later
+Text Domain: khagendra-plugin
+
+*/
+
+/*
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+Copyright (C) 2022  Khagendra Lama
+
+*/
+
+if ( !defined( 'ABSPATH' ) ) {
+    die;
+}
+
+if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+    require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+}
+
+// The code that runs during plugin activation
+function activate_khagendra_plugin() {
+    Inc\Base\Activate::activate();
+}
+register_activation_hook( __FILE__, 'activate_khagendra_plugin' );
+
+// The code that runs during plugin deactivation
+function deactivate_khagendra_plugin() {
+    Inc\Base\Deactivate::deactivate();
+}
+register_deactivation_hook( __FILE__, 'deactivate_khagendra_plugin' );
+
+if ( class_exists( 'Inc\\Init' ) ) {
+    Inc\Init::register_services();
+}
