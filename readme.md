@@ -3,6 +3,7 @@
 Here are the list of section and feature which I built during this class.
 
 - Modular Administration Area
+  [Modular Administration Area](/assets/img/modular-admin-area.png)
 - CPT Manager
 - Custom Taxonomy Manager
 - Widget to Upload and Display media in sidebars

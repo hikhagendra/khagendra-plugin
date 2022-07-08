@@ -8,17 +8,20 @@ namespace Inc\Pages;
 use \Inc\Api\SettingsApi;
 use \Inc\Base\BaseController;
 use \Inc\Api\Callbacks\AdminCallbacks;
+use \Inc\Api\Callbacks\ManagerCallbacks;
 
 class Admin extends BaseController {
     public $settings;
     public $pages;
     public $subpages;
     public $callbacks;
+    public $callbacks_mngr;
     
     public function register() {
         $this->settings = new SettingsApi();
 
         $this->callbacks = new AdminCallbacks();
+        $this->callbacks_mngr = new ManagerCallbacks();
 
         $this->setPages();
 
@@ -75,17 +78,16 @@ class Admin extends BaseController {
     }
 
     public function setSettings() {
-        $args = array(
-            array(
-                'option_group'      =>  'khagendra_options_group',
-                'option_name'       =>  'text_example',
-                'callback'          =>  array( $this->callbacks, 'khagendraOptionsGroup' )
-            ),
-            array(
-                'option_group'      =>  'khagendra_options_group',
-                'option_name'       =>  'first_name'
-            )
-        );
+
+        $args = array();
+
+        foreach($this->managers as $key => $manager) {
+            $args[] = array(
+                        'option_group'      =>  'khagendra_plugin_settings',
+                        'option_name'       =>  $key,
+                        'callback'          =>  array( $this->callbacks_mngr, 'checkboxSanitize' )
+            );
+        }
 
         $this->settings->setSettings( $args );
     }
@@ -95,7 +97,7 @@ class Admin extends BaseController {
             array(
                 'id'            =>  'khagendra_admin_index',
                 'title'         =>  'Settings',
-                'callback'      =>  array( $this->callbacks, 'khagendraAdminSection' ),
+                'callback'      =>  array( $this->callbacks_mngr, 'adminSectionManager' ),
                 'page'          =>  'khagendra_plugin'
             )
         );
@@ -104,30 +106,21 @@ class Admin extends BaseController {
     }
 
     public function setFields() {
-        $args = array(
-            array(
-                'id'            =>  'text_example',
-                'title'         =>  'Text Example',
-                'callback'      =>  array( $this->callbacks, 'khagendraTextExample' ),
+        $args = array();
+
+        foreach($this->managers as $key => $manager) {
+            $args[] = array(
+                'id'            =>  $key,
+                'title'         =>  $manager,
+                'callback'      =>  array( $this->callbacks_mngr, 'checkboxField' ),
                 'page'          =>  'khagendra_plugin',
                 'section'       =>  'khagendra_admin_index',
                 'args'          =>  array(
-                    'label_for' =>  'text_example',
-                    'class'     =>  'example_class'
+                    'label_for' =>  $key,
+                    'class'     =>  'ui-toggle'
                 )
-            ),
-            array(
-                'id'            =>  'first_name',
-                'title'         =>  'First Name',
-                'callback'      =>  array( $this->callbacks, 'khagendraFirstName' ),
-                'page'          =>  'khagendra_plugin',
-                'section'       =>  'khagendra_admin_index',
-                'args'          =>  array(
-                    'label_for' =>  'first_name',
-                    'class'     =>  'example_class'
-                )
-            )
-        );
+                );
+        }
 
         $this->settings->setFields( $args );
     }

@@ -12,7 +12,7 @@
         <div id="tab-1" class="tab-pane active">
             <form action="options.php" method="post">
                 <?php
-                    settings_fields( 'khagendra_options_group' );
+                    settings_fields( 'khagendra_plugin_settings' );
                     do_settings_sections( 'khagendra_plugin' );
                     submit_button();
                 ?>

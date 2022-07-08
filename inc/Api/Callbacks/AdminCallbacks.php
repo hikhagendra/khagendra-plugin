@@ -28,13 +28,13 @@ class AdminCallbacks extends BaseController {
         return require_once( "$this->plugin_path/templates/widget.php" );
     }
 
-    public function khagendraOptionsGroup( $input ) {
-        return $input;
-    }
+    // public function khagendraOptionsGroup( $input ) {
+    //     return $input;
+    // }
 
-    public function khagendraAdminSection() {
-        echo 'Check this beautiful section';
-    }
+    // public function khagendraAdminSection() {
+    //     echo 'Check this beautiful section';
+    // }
 
     public function khagendraTextExample() {
         $value = esc_attr( get_option( 'text_example' ) );
