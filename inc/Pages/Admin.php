@@ -79,15 +79,13 @@ class Admin extends BaseController {
 
     public function setSettings() {
 
-        $args = array();
-
-        foreach($this->managers as $key => $manager) {
-            $args[] = array(
-                        'option_group'      =>  'khagendra_plugin_settings',
-                        'option_name'       =>  $key,
-                        'callback'          =>  array( $this->callbacks_mngr, 'checkboxSanitize' )
-            );
-        }
+        $args = array(
+            array(
+                'option_group'      =>  'khagendra_plugin_settings',
+                'option_name'       =>  'khagendra_plugin',
+                'callback'          =>  array( $this->callbacks_mngr, 'checkboxSanitize' )
+            )
+        );
 
         $this->settings->setSettings( $args );
     }
@@ -116,8 +114,9 @@ class Admin extends BaseController {
                 'page'          =>  'khagendra_plugin',
                 'section'       =>  'khagendra_admin_index',
                 'args'          =>  array(
-                    'label_for' =>  $key,
-                    'class'     =>  'ui-toggle'
+                    'option_name'   =>  'khagendra_plugin',
+                    'label_for'     =>  $key,
+                    'class'         =>  'ui-toggle'
                 )
                 );
         }
